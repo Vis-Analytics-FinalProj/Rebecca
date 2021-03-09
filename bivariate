@@ -4,8 +4,8 @@
 library(rio)
 
 ## importing the excel file
-location = "https://github.com/rjtaylorUW/PUBPOL543/raw/main/"
-file = "Seattle_Pet_Licenses.xlsx"
+location = "https://github.com/Vis-Analytics-FinalProj/Final-Project-Data/raw/main/"
+file = "rawpetdata.xls"
 mydata = paste0(location,file)
 ```
 
