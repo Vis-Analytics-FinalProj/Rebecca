@@ -1,7 +1,5 @@
 
 
-
-
 ```{r}
 ## load the data
 library(rio)
@@ -47,19 +45,12 @@ ToPlot
 
 base= ggplot(data = ToPlot, 
              aes(x = reorder(Breeds, -Freq),
-                 y = Freq,
-                 fill = Freq)) +
+                 y = Freq)) +
   geom_bar(stat = 'identity')
 base
 ```
 
 
-
-```{r}
-bars=base+geom_bar(stat = 'identity')
-bars
-
-```
 
 
 ```{r}
@@ -71,7 +62,7 @@ Titles=list(Title="Cat Licenses Purchased Between 2015 and 2019",
             Sou="Source: King County")
 
 ## placing the titles on the graph
-plot2= bars + labs(title = Titles$Title,
+plot2= base + labs(title = Titles$Title,
                     subtitle = Titles$SubTi,
                     x=Titles$XTi,
                     y=Titles$YTi,
@@ -104,5 +95,3 @@ FinalChart = labtext + theme(
 )
 FinalChart
 ```
-
-
