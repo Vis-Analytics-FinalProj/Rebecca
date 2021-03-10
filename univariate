@@ -1,5 +1,4 @@
 
-
 ```{r}
 ## load the data
 library(rio)
@@ -40,23 +39,26 @@ ToPlot
 ```
 
 
+
 ```{r}
 ## plotting the bar chart
+
 base= ggplot(data = ToPlot, 
              aes(x = Breeds,
-                 y = Freq)) 
-base= base + theme_classic()
-
-plot1 = base + geom_bar(fill ="gray",
-                        stat = 'identity') 
-plot1
+                 y = Freq,
+                 fill = Freq)) +
+  geom_bar(stat = 'identity')
+base
 ```
+
 
 
 ```{r}
 bars=base+geom_bar(stat = 'identity')
 bars
+
 ```
+
 
 
 ```{r}
@@ -92,4 +94,5 @@ plot3 = plot2 + theme(plot.subtitle = element_text(hjust = 0.5),
                       plot.caption = element_text(hjust = 1))
 plot3
 ```
+
 
