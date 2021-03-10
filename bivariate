@@ -83,20 +83,21 @@ bar2=bar1 + scale_x_date(breaks = date_breaks("months"),
   labels = date_format("%b-%y"))  
 
 
-bar3=bar2 + theme(axis.text.x = element_text(angle = 90)) 
+bar3=bar2 + theme_minimal()
 
+bar4 = bar3 + theme(axis.text.x = element_text(angle = 90, vjust = 0.5))
 
-bar3
+bar4
 
 ```
 
 ```{r}
-bar4=bar3 + geom_text(aes(label=count),
+bar5=bar4 + geom_text(aes(label=count),
                       angle=90 ,
-                      size=4,
-                      hjust = 1,
-                      color='white') + geom_vline(xintercept=as.Date('2020-03-23'), col="red") + geom_text(aes(x=as.Date('2020-03-23'), label="Lockdown 3/23/2020", y=1000), color="red", angle=0, size=4)
-bar4
+                      size=3,
+                      hjust = 1.25,
+                      color='white') + geom_vline(xintercept=as.Date('2020-03-23'), col="red") + geom_text(aes(x=as.Date('2020-03-23'), label="Lockdown 3/23/2020", y=900), color="red", angle=0, size=3, nudge_x = -75, nudge_y = 25)
+bar5
 ```
 
 
@@ -105,12 +106,12 @@ bar4
 ## Adding title names
 Titles=list(Title="King County Cat Licenses By Date",
             SubTi="Jan 1, 2019-Jan 10, 2021",
-            XTi='License Issue Month',
-            YTi="Number of Licenses Issued",
+            XTi='License Issue Month and Year',
+            YTi="Number of Licenses Purchased",
             Sou="Source: King County")
 
 ## placing the titles on the graph
-plot2= bar4 + labs(title = Titles$Title,
+plot2= bar5 + labs(title = Titles$Title,
                     subtitle = Titles$SubTi,
                     x=Titles$XTi,
                     y=Titles$YTi,
@@ -125,4 +126,3 @@ plot3 = plot2 + theme(plot.subtitle = element_text(hjust = 0.5),
                       plot.caption = element_text(hjust = 1))
 plot3
 ```
-
