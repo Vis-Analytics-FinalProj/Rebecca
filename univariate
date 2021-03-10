@@ -1,5 +1,7 @@
 
 
+
+
 ```{r}
 ## load the data
 library(rio)
@@ -62,7 +64,7 @@ bars
 
 ```{r}
 ## Adding title names
-Titles=list(Title="Pet Licenses Purchased between 2015 and 2019",
+Titles=list(Title="Cat Licenses Purchased Between 2015 and 2019",
             SubTi="Top Five Cat Breeds",
             XTi="Cat Breed",
             YTi="Number",
@@ -89,3 +91,18 @@ bartext=plot3 + geom_text(aes(label=Freq),
                          nudge_y = 400)
 bartext
 ```
+
+```{r}
+labtext = bartext + labs(fill = "Count")
+labtext
+```
+
+```{r}
+FinalChart = labtext + theme(
+  plot.title = element_text(hjust = 0.5),
+  plot.subtitle = element_text(hjust = 0.5)
+)
+FinalChart
+```
+
+
