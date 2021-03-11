@@ -1,3 +1,104 @@
 
 
-library (rio)
+```{r}
+## need this library to import excel files
+library(rio)
+
+## importing the excel file
+location = "https://github.com/Vis-Analytics-FinalProj/Final-Project-Data/raw/main/"
+file = "rawpetdata.xls"
+mydata = paste0(location,file)
+```
+
+```{r}
+mydata = import(mydata)
+```
+
+
+
+```{r}
+## limits Species to just cats
+newdata <- mydata[ which(mydata$Species=='Cat'
+), ]
+```
+
+
+
+```{r}
+s = table(newdata$Species, newdata$`ZIP Code`)
+t = as.data.frame(s)
+names(t)[1] = 'Species'
+names(t)[2] = 'ZIP Code'
+t[order(-t[[3]]),]
+```
+
+
+```{r}
+## link the ZIP code map
+linkMap="https://github.com/Vis-Analytics-FinalProj/Rebecca-Taylor/raw/main/Zipcodes_for_King_County_and_Surrounding_Area___zipcode_area%20(1).json"
+```
+
+```{r}
+library(sf)
+mapWA=read_sf(linkMap)
+```
+
+```{r}
+MergedMap=merge(mapWA,
+                   t, 
+                   by.x='ZIPCODE', by.y='ZIP Code') 
+```
+
+```{r}
+library(ggplot2)
+# plot original map
+base=ggplot(data=mapWA) + geom_sf(fill='grey95',
+                                  color='grey40',
+                                  lwd=0.5) + theme_classic()
+```
+
+
+```{r}
+colMap= base + geom_sf(data=MergedMap,
+                       aes(fill=-Freq),
+                       color="grey40",
+                       lwd=0.25)+
+  scale_fill_viridis_c(option = "magma",begin = 0.1)
+colMap
+```
+
+
+```{r}
+SeaMap = colMap + geom_point(aes(x=-122.335167, y=47.608013), size=2, color="black") +
+  geom_text(x=-122.13, y=47.608013, label="Seattle")
+SeaMap
+```
+
+```{r}
+## Adding title names
+Titles=list(Title="Cat Licenses Purchased in King County by ZIP Code",
+            SubTi="2015-2019",
+            Sou="Source: King County")
+
+## placing the titles on the graph
+plot2= SeaMap + labs(title = Titles$Title,
+                    subtitle = Titles$SubTi,
+                    caption = Titles$Sou)
+
+plot3 = plot2 + theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())
+plot3
+```
+```{r}
+bartext=plot3 + labs(fill = "Count")
+
+MapChart = bartext + theme(
+  plot.title = element_text(hjust = 0.5),
+  plot.subtitle = element_text(hjust = 0.5)
+)
+MapChart
+```
